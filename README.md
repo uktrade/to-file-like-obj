@@ -2,7 +2,7 @@
 
 Python utility function to convert an iterable of `bytes` or `str` to a readable file-like object.
 
-It can be seen as the inverse of the [two-argument iter function](https://docs.python.org/3/library/functions.html#iter). The iter function allows conversion of file-like objects to iterables, but the function here, `to_file_like_obj`, converts from iterables to file-like objects. This allows you to bridge the gap between incompatible streaming APIs - passing data from sources that offer data as iterables to destinations that only accept file-like objects.
+It can be seen as the inverse of the [two-argument iter function](https://docs.python.org/3/library/functions.html#iter). The iter function allows conversion of file-like objects to iterables, but the function here converts from iterables to file-like objects. This allows you to bridge the gap between incompatible streaming APIs - passing data from sources that offer data as iterables to destinations that only accept file-like objects.
 
 > Work in progress. This README serves as a rough design spec
 
