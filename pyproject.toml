@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "to-file-like-obj"
+version = "0.0.0.dev0"
+authors = [
+  { name="Department for International Trade", email="sre@digital.trade.gov.uk" },
+]
+description = "Utility function to convert an iterable of bytes or str to a readable file-like object."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.2.1",
+]
+ci = [
+    "pytest",
+    "pytest-cov",
+    "coverage",
+]
+
+[project.urls]
+"Source" = "https://github.com/uktrade/to-file-like-obj"
+
+[tool.hatch.build]
+include = [
+  "to_file_like_obj.py"
+]
