@@ -41,3 +41,5 @@ from to_file_like_obj import to_file_like_obj
 
 f = to_file_like_obj(('one', 'two', 'three',), base=str)
 ```
+
+These examples have the iterables hard coded and so loaded all into memory. However, `to_file_like_obj` works equally well with iterables that are generated dynamically, and without loading them all into memory.
