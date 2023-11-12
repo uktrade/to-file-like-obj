@@ -9,7 +9,7 @@ Python utility function to convert an iterable of `bytes` or `str` to a readable
 
 - Inherits from `IOBase` - some APIs require this
 - The resulting file-like object is well-behaved - it does not return more data than requested
-- It evaluates the iterable lazily - avoiding loading all the data into memory
+- It evaluates the iterable lazily - avoiding loading all its data into memory
 - Under the hood copying is avoided as much as possible
 - Converts iterables of `bytes` to bytes-based file-like objects, which can be passed to [boto3's upload_fileobj](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/upload_fileobj.html) or to [io.TextIOWrapper](https://docs.python.org/3/library/io.html#io.TextIOWrapper)
 - Converts iterables of `str` to text-based file-like objects, which can be passed to [psycopg2's copy_expert](https://www.psycopg.org/docs/cursor.html#cursor.copy_expert)
