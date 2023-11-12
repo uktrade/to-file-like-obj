@@ -30,6 +30,9 @@ If you have an iterable of `bytes` instances, you can pass them to the `to_file_
 from to_file_like_obj import to_file_like_obj
 
 f = to_file_like_obj((b'one', b'two', b'three',))
+
+print(f.read(5))  # b'onetw'
+print(f.read(6))  # b'othree'
 ```
 
 If you have an iterable of `str` instances, you can pass them to the `to_file_like_obj`, along with `base=str` as a named argument, and it will return the corresponding file-like object.
@@ -38,6 +41,9 @@ If you have an iterable of `str` instances, you can pass them to the `to_file_li
 from to_file_like_obj import to_file_like_obj
 
 f = to_file_like_obj(('one', 'two', 'three',), base=str)
+
+print(f.read(5))  # 'onetw'
+print(f.read(6))  # 'othree'
 ```
 
 These examples have the iterables hard coded and so loaded all into memory. However, `to_file_like_obj` works equally well with iterables that are generated dynamically, and without loading them all into memory.
