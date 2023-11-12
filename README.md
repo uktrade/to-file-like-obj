@@ -11,7 +11,7 @@ Python utility function to convert an iterable of `bytes` or `str` to a readable
 - The file-like object is well-behaved - it does not return more data than requested
 - It evaluates the iterable lazily - avoiding loading all the data into memory
 - Under the hood copying is avoided as much as possible
-- Supports iterables of `bytes`, which can be passed to [boto3's upload_fileobj](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/upload_fileobj.html), or to [io.TextIOWrapper](https://docs.python.org/3/library/io.html#io.TextIOWrapper)
+- Supports iterables of `bytes`, which can be passed to [boto3's upload_fileobj](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/upload_fileobj.html), or to [io.TextIOWrapper](https://docs.python.org/3/library/io.html#io.TextIOWrapper) which is useful to robustly parse CSV files in a streaming way.
 - Supports iterables of `str`, which can be passed to the[psycopg2's copy_expert](https://www.psycopg.org/docs/cursor.html#cursor.copy_expert)
 
 
