@@ -88,7 +88,7 @@ with httpx.stream("GET", "https://www.example.com/my.zip") as r:
     zipped_bytes_iter = r.iter_bytes()
     # Assumes a single CSV file in the ZIP (in the case of more, this will concatanate them together)
     unzipped_bytes_iter = (
-        chunks
+        chunk
         for _, _, chunks in stream_unzip(zipped_bytes_iter)
         for chunk in chunks
     )
