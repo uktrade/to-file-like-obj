@@ -44,7 +44,10 @@ def test_lazy_iteration():
 
     f = to_file_like_obj(logged(bytes_iter))
 
-    while c := f.read(1):
+    while True:
+        c = f.read(1)
+        if not c:
+            break
         log.append(c)
 
     assert log == [b'ab', b'a', b'b', b'cd', b'c', b'd', b'ef', b'e', b'f']
