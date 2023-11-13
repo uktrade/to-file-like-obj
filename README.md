@@ -1,5 +1,7 @@
 # to-file-like-obj
 
+[![PyPI package](https://img.shields.io/pypi/v/to-file-like-obj?label=PyPI%20package&color=%234c1)](https://pypi.org/project/to-file-like-obj/) [![Test suite](https://img.shields.io/github/actions/workflow/status/uktrade/to-file-like-obj/test.yml?label=Test%20suite)](https://github.com/uktrade/to-file-like-obj/actions/workflows/test.yml) [![Code coverage](https://img.shields.io/codecov/c/github/uktrade/to-file-like-obj?label=Code%20coverage)](https://app.codecov.io/gh/uktrade/to-file-like-obj)
+
 Python utility function to convert an iterable of `bytes` or `str` to a readable file-like object.
 
 It can be seen as the inverse of the [two-argument iter function](https://docs.python.org/3/library/functions.html#iter). The iter function allows conversion of file-like objects to iterables, but the function here converts from iterables to file-like objects. This allows you to bridge the gap between incompatible streaming APIs - passing data from sources that offer data as iterables to destinations that only accept file-like objects.
