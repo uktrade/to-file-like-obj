@@ -27,10 +27,10 @@ def test_basic_str_base():
 
 
 def test_read_crossing_chunk_boundaries():
-    bytes_iter = ('ab', 'cd', 'ef')
-    f = to_file_like_obj(bytes_iter, base=str)
+    bytes_iter = (b'ab', b'cd', b'ef')
+    f = to_file_like_obj(bytes_iter)
 
-    assert [f.read(3), f.read(2), f.read(2)] == ['abc', 'de', 'f']
+    assert [f.read(3), f.read(2), f.read(2), f.read(2)] == [b'abc', b'de', b'f', b'']
 
 
 def test_well_behaved():
