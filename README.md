@@ -92,5 +92,35 @@ s3 = boto3.client('s3')
 with httpx.stream("GET", "https://www.example.com/my.zip") as r:
     bytes_iter = r.iter_bytes()
     f = to_file_like_obj(bytes_iter)
-    s3.upload_fileobj(f, 'my-bucket', 'my-key')
+    s3.upload_fileobj(f, 'my-bucket', 'my.zip')
+```
+
+
+## Recipe: stream-zipping while uploading to S3
+
+[stream-zip](https://stream-zip.docs.trade.gov.uk/) can be used with boto3 and this package to upload objects to S3 while zipping them.
+
+```python
+import datetime
+import httpx
+from stat import S_IFREG
+from to_file_like_obj import to_file_like_obj
+from stream_zip import ZIP_32, stream_zip
+
+s3 = boto3.client('s3')
+
+with httpx.stream("GET", "https://www.example.com/my.txt") as r:
+    unzipped_bytes_iter = r.iter_bytes()
+    member_files = (
+        (
+            'my.txt',
+            datetime.now(),
+            S_IFREG | 0o600,
+            ZIP_32,
+            unzipped_bytes_iter,
+        ),
+    )
+    zipped_bytes_iter = stream_zip(member_files)
+    f = to_file_like_obj(zipped_bytes_iter)
+    s3.upload_fileobj(f, 'my-bucket', 'my.zip')
 ```
