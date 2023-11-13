@@ -33,6 +33,23 @@ def test_well_behaved():
     assert list(iter(lambda: len(f.read(1)), 0)) == [1, 1, 1, 1, 1, 1]
 
 
+def test_streaming():
+    bytes_iter = (b'ab', b'cd', b'ef')
+
+    log = []
+    def logged(it):
+        for v in it:
+            log.append(v)
+            yield v
+
+    f = to_file_like_obj(logged(bytes_iter))
+
+    while c := f.read(1):
+        log.append(c)
+
+    assert log == [b'ab', b'a', b'b', b'cd', b'c', b'd', b'ef', b'e', b'f']
+
+
 def test_exception_propagates():
     def bytes_iter():
         yield from ()
