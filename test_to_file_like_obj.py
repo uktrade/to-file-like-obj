@@ -24,28 +24,28 @@ def test_default():
     assert f.read() == b'abcdef'
 
 
-def test_default():
+def test_default_minus_one_positional():
     bytes_iter = (b'ab', b'cd', b'ef')
     f = to_file_like_obj(bytes_iter)
 
     assert f.read(-1) == b'abcdef'
 
 
-def test_default():
+def test_default_minus_one_named():
     bytes_iter = (b'ab', b'cd', b'ef')
     f = to_file_like_obj(bytes_iter)
 
     assert f.read(size=-1) == b'abcdef'
 
 
-def test_default():
+def test_default_none_positional():
     bytes_iter = (b'ab', b'cd', b'ef')
     f = to_file_like_obj(bytes_iter)
 
     assert f.read(None) == b'abcdef'
 
 
-def test_default():
+def test_default_none_named():
     bytes_iter = (b'ab', b'cd', b'ef')
     f = to_file_like_obj(bytes_iter)
 
