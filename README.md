@@ -49,3 +49,31 @@ print(f.read(6))  # 'othree'
 ```
 
 These examples have the iterables hard coded and so loaded all into memory. However, `to_file_like_obj` works equally well with iterables that are generated dynamically, and without loading them all into memory.
+
+
+## Recipe: parsing a zipped CSV file while downloading it
+
+Using httpx and stream-unzip, it's possible to robustly parse a CSV file while downloading it.
+
+```python
+import csv
+import io
+
+import httpx
+from stream_unzip import stream_unzip
+from to_file_like_obj import to_file_like_obj
+
+with httpx.stream("GET", "https://www.example.com/my.zip") as r:
+    zipped_bytes_iter = r.iter_bytes()
+    # Assumes a single CSV file in the ZIP (in the case of more, this will concatanate them together)
+    unzipped_bytes_iter = (
+        chunks
+        for _, _, chunks in stream_unzip(zipped_bytes_iter)
+        for chunk in chunks
+    )
+    f = to_file_like_obj(unzipped_bytes_iter)
+    lines_iter = io.TextIOWrapper(f, newline='', encoding='utf=8')
+    rows_iter = csv.reader(lines):
+    for row in rows_iter:
+        print(row)
+```
