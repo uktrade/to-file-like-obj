@@ -33,6 +33,14 @@ def test_well_behaved():
     assert list(iter(lambda: len(f.read(1)), 0)) == [1, 1, 1, 1, 1, 1]
 
 
+def test_textiowrapper_groups_into_lines():
+    bytes_iter = (b'a\nb', b'c\nd', b'e\nf')
+    f = to_file_like_obj(bytes_iter)
+
+    lines = io.TextIOWrapper(f, newline='', encoding='utf=8')
+    assert list(lines) == ['a\n', 'bc\n', 'de\n', 'f']
+
+
 @pytest.mark.parametrize(
     "args,kwargs",
     [
@@ -48,11 +56,3 @@ def test_default(args, kwargs):
     f = to_file_like_obj(bytes_iter)
 
     assert f.read(*args, **kwargs) == b'abcdef'
-
-
-def test_textiowrapper_groups_into_lines():
-    bytes_iter = (b'a\nb', b'c\nd', b'e\nf')
-    f = to_file_like_obj(bytes_iter)
-
-    lines = io.TextIOWrapper(f, newline='', encoding='utf=8')
-    assert list(lines) == ['a\n', 'bc\n', 'de\n', 'f']
