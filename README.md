@@ -53,7 +53,7 @@ These examples have the iterables hard coded and so loaded all into memory. Howe
 
 ## Recipe: parsing a zipped CSV file while downloading it
 
-Using httpx and stream-unzip, it's possible to robustly parse a CSV file while downloading it.
+Using [httpx](https://www.python-httpx.org/) and [stream-unzip](https://stream-unzip.docs.trade.gov.uk/), it's possible to robustly parse a CSV file while downloading it.
 
 ```python
 import csv
@@ -76,4 +76,21 @@ with httpx.stream("GET", "https://www.example.com/my.zip") as r:
     rows_iter = csv.reader(lines):
     for row in rows_iter:
         print(row)
+```
+
+
+## Recipe: uploading large objects to S3 while receiving their contents
+
+[boto3's upload_fileobj](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/upload_fileobj.html) is a powerful function, but it's not obvious that it can be used with iterables of bytes that are returned from various APIs, such as those in [httpx](https://www.python-httpx.org/).
+
+```python
+import httpx
+from to_file_like_obj import to_file_like_obj
+
+s3 = boto3.client('s3')
+
+with httpx.stream("GET", "https://www.example.com/my.zip") as r:
+    bytes_iter = r.iter_bytes()
+    f = to_file_like_obj(bytes_iter)
+    s3.upload_fileobj(f, 'my-bucket', 'my-key')
 ```
