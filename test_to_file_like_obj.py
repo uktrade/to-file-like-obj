@@ -26,6 +26,13 @@ def test_basic_str_base():
     assert ''.join(iter(lambda: f.read(1), '')) == ''.join(bytes_iter)
 
 
+def test_read_crossing_chunk_boundaries():
+    bytes_iter = ('ab', 'cd', 'ef')
+    f = to_file_like_obj(bytes_iter, base=str)
+
+    assert f.read(3) + f.read(2) + f.read(2) == ''.join(bytes_iter)
+
+
 def test_well_behaved():
     bytes_iter = (b'ab', b'cd', b'ef')
     f = to_file_like_obj(bytes_iter)
@@ -33,7 +40,7 @@ def test_well_behaved():
     assert list(iter(lambda: len(f.read(1)), 0)) == [1, 1, 1, 1, 1, 1]
 
 
-def test_streaming():
+def test_lazy_iteration():
     bytes_iter = (b'ab', b'cd', b'ef')
 
     log = []
