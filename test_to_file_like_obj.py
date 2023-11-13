@@ -72,6 +72,13 @@ def test_textiowrapper_groups_into_lines():
     assert list(lines) == ['a\n', 'bc\n', 'de\n', 'f']
 
 
+def test_default_after_number():
+    bytes_iter = (b'ab', b'cd', b'ef')
+    f = to_file_like_obj(bytes_iter)
+
+    assert [f.read(1), f.read(), f.read()] == [b'a', b'bcdef', b'']
+
+
 @pytest.mark.parametrize(
     "args,kwargs",
     [
