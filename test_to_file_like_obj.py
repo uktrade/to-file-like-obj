@@ -30,7 +30,7 @@ def test_read_crossing_chunk_boundaries():
     bytes_iter = ('ab', 'cd', 'ef')
     f = to_file_like_obj(bytes_iter, base=str)
 
-    assert f.read(3) + f.read(2) + f.read(2) == ''.join(bytes_iter)
+    assert [f.read(3), f.read(2), f.read(2)] == ['abc', 'de', 'f']
 
 
 def test_well_behaved():
