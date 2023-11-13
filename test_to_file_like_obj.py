@@ -33,6 +33,17 @@ def test_well_behaved():
     assert list(iter(lambda: len(f.read(1)), 0)) == [1, 1, 1, 1, 1, 1]
 
 
+def test_exception_propagates():
+    def bytes_iter():
+        yield from ()
+        raise Exception("My exception")
+
+    f = to_file_like_obj(bytes_iter())
+
+    with pytest.raises(Exception, match="My exception"):
+        f.read()
+
+
 def test_textiowrapper_groups_into_lines():
     bytes_iter = (b'a\nb', b'c\nd', b'e\nf')
     f = to_file_like_obj(bytes_iter)
