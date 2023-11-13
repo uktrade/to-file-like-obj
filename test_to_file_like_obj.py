@@ -10,6 +10,20 @@ def test_basic():
     assert b''.join(iter(lambda: f.read(1), b'')) == b''.join(bytes_iter)
 
 
+def test_basic_bytes_base():
+    bytes_iter = (b'ab', b'cd', b'ef')
+    f = to_file_like_obj(bytes_iter, base=bytes)
+
+    assert b''.join(iter(lambda: f.read(1), b'')) == b''.join(bytes_iter)
+
+
+def test_basic_str_base():
+    bytes_iter = ('ab', 'cd', 'ef')
+    f = to_file_like_obj(bytes_iter, base=str)
+
+    assert ''.join(iter(lambda: f.read(1), '')) == ''.join(bytes_iter)
+
+
 def test_well_behaved():
     bytes_iter = (b'ab', b'cd', b'ef')
     f = to_file_like_obj(bytes_iter)
