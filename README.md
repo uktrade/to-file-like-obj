@@ -13,7 +13,7 @@ It can be seen as the inverse of the [two-argument iter function](https://docs.p
 - The resulting file-like object is well-behaved - it does not return more data than requested
 - It evaluates the iterable lazily - avoiding loading all its data into memory
 - Under the hood copying is avoided as much as possible
-- Converts iterables of `bytes` to bytes-based file-like objects, which can be passed to [boto3's upload_fileobj](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/upload_fileobj.html) or to [io.TextIOWrapper](https://docs.python.org/3/library/io.html#io.TextIOWrapper)
+- Converts iterables of `bytes` to bytes-based file-like objects, which can be passed to [boto3's upload_fileobj](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/upload_fileobj.html) or to [io.TextIOWrapper](https://docs.python.org/3/library/io.html#io.TextIOWrapper) which is useful in stream CSV parsing.
 - Converts iterables of `str` to text-based file-like objects, which can be passed to [psycopg2's copy_expert](https://www.psycopg.org/docs/cursor.html#cursor.copy_expert)
 
 
