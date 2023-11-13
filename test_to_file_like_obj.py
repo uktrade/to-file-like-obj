@@ -1,5 +1,7 @@
 import io
 
+import pytest
+
 from to_file_like_obj import to_file_like_obj
 
 
@@ -31,39 +33,21 @@ def test_well_behaved():
     assert list(iter(lambda: len(f.read(1)), 0)) == [1, 1, 1, 1, 1, 1]
 
 
-def test_default():
+@pytest.mark.parametrize(
+    "args,kwargs",
+    [
+        ((), {}),
+        ((-1,), {}),
+        ((), {"size": -1}),
+        ((None,), {}),
+        ((), {"size": None}),
+    ]
+)
+def test_default(args, kwargs):
     bytes_iter = (b'ab', b'cd', b'ef')
     f = to_file_like_obj(bytes_iter)
 
-    assert f.read() == b'abcdef'
-
-
-def test_default_minus_one_positional():
-    bytes_iter = (b'ab', b'cd', b'ef')
-    f = to_file_like_obj(bytes_iter)
-
-    assert f.read(-1) == b'abcdef'
-
-
-def test_default_minus_one_named():
-    bytes_iter = (b'ab', b'cd', b'ef')
-    f = to_file_like_obj(bytes_iter)
-
-    assert f.read(size=-1) == b'abcdef'
-
-
-def test_default_none_positional():
-    bytes_iter = (b'ab', b'cd', b'ef')
-    f = to_file_like_obj(bytes_iter)
-
-    assert f.read(None) == b'abcdef'
-
-
-def test_default_none_named():
-    bytes_iter = (b'ab', b'cd', b'ef')
-    f = to_file_like_obj(bytes_iter)
-
-    assert f.read(size=None) == b'abcdef'
+    assert f.read(*args, **kwargs) == b'abcdef'
 
 
 def test_textiowrapper_groups_into_lines():
