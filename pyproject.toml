@@ -26,6 +26,7 @@ ci = [
     "pytest",
     "pytest-cov",
     "coverage",
+    "mypy <1.5",
 ]
 
 [project.urls]
