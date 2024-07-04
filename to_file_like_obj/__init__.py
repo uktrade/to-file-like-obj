@@ -19,7 +19,7 @@ def to_file_like_obj(iterable: Iterable[bytes], base: Type[bytes]=bytes) -> IOBa
                     break
                 else:
                     offset = 0
-            to_yield = min(size, len(chunk) - offset)
+            to_yield: int = min(size, len(chunk) - offset)
             offset = offset + to_yield
             size -= to_yield
             yield chunk[offset - to_yield : offset]
@@ -29,8 +29,9 @@ def to_file_like_obj(iterable: Iterable[bytes], base: Type[bytes]=bytes) -> IOBa
             return True
 
         def read(self, size: int=-1) -> bytes:
+            max_size: int = 2**63 - 1
             return base().join(
-                up_to_iter(float('inf') if size is None or size < 0 else size)
+                up_to_iter(max_size if size is None or size < 0 else size)
             )
 
     return FileLikeObj()
