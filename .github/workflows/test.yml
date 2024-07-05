@@ -19,15 +19,26 @@ jobs:
           - "3.11.0"
           - "3.12.0"
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          python-version: '${{ matrix.python-version }}'
-      - name: "Install package and python dependencies"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package and python dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install .[ci]
-      - name: "Test"
+
+      - name: Run pytest
         run: |
           pytest --cov
-      - uses: codecov/codecov-action@v3
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+
+      - name: Run mypy
+        run: |
+          mypy to_file_like_obj
