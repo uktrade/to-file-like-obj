@@ -1,10 +1,22 @@
 from io import IOBase
-from typing import TypeVar, Iterable, Type, Iterator
+from typing import TypeVar, Iterable, Type, Iterator, overload
 
 T = TypeVar('T', str, bytes)
 
-def to_file_like_obj(iterable: Iterable[T], base: Type[T]=bytes) -> IOBase:
-    chunk: T = base()
+@overload
+def to_file_like_obj(iterable: Iterable[bytes]) -> IOBase:
+    ...
+
+@overload
+def to_file_like_obj(iterable: Iterable[bytes], base: Type[bytes]) -> IOBase:
+    ...
+
+@overload
+def to_file_like_obj(iterable: Iterable[str], base: Type[str]) -> IOBase:
+    ...
+
+def to_file_like_obj(iterable, base=bytes) -> IOBase:
+    chunk = base()
     offset: int = 0
     it = iter(iterable)
 
