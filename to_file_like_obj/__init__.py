@@ -1,14 +1,14 @@
 from io import IOBase
-from typing import Iterable, Type, Iterator
-from typing_extensions import Buffer
+from typing import TypeVar, Iterable, Type, Iterator
 
+T = TypeVar('T', str, bytes)
 
-def to_file_like_obj(iterable: Iterable[bytes], base: Type[bytes]=bytes) -> IOBase:
-    chunk: bytes = base()
+def to_file_like_obj(iterable: Iterable[T], base: Type[T]=bytes) -> IOBase:
+    chunk: T = base()
     offset: int = 0
-    it: Iterator[bytes] = iter(iterable)
+    it = iter(iterable)
 
-    def up_to_iter(size: int) -> Iterable[Buffer]:
+    def up_to_iter(size: int) -> Iterator[T]:
         nonlocal chunk, offset
 
         while size:
@@ -28,7 +28,7 @@ def to_file_like_obj(iterable: Iterable[bytes], base: Type[bytes]=bytes) -> IOBa
         def readable(self) -> bool:
             return True
 
-        def read(self, size: int=-1) -> bytes:
+        def read(self, size: int=-1) -> T:
             max_size: int = 2**63 - 1
             return base().join(
                 up_to_iter(max_size if size is None or size < 0 else size)
