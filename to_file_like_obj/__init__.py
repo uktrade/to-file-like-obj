@@ -15,7 +15,7 @@ def to_file_like_obj(iterable: Iterable[bytes], base: Type[bytes]) -> IOBase:
 def to_file_like_obj(iterable: Iterable[str], base: Type[str]) -> IOBase:
     ...
 
-def to_file_like_obj(iterable, base=bytes) -> IOBase:
+def to_file_like_obj(iterable: Iterable[T], base=bytes) -> IOBase:
     chunk = base()
     offset: int = 0
     it = iter(iterable)
