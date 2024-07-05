@@ -3,7 +3,7 @@ from typing import TypeVar, Iterable, Type, Iterator
 
 T = TypeVar('T', str, bytes)
 
-def to_file_like_obj(iterable: Iterable[T], base: Type[T]) -> IOBase:
+def to_file_like_obj(iterable: Iterable[T], base: Type[T]=bytes) -> IOBase:
     chunk: T = base()
     offset: int = 0
     it = iter(iterable)
